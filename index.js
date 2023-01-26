@@ -4,6 +4,7 @@ const inputBtn = document.getElementById("input-btn")
 const ulEl = document.getElementById("ul-el")
 const deleteBtn=document.getElementById("delete-btn")
 const tabBtn = document.getElementById("tab-btn")
+const downloadBtn = document.getElementById("download-btn")
 
 const leadsFromLocalStorage = JSON.parse( localStorage.getItem("myLeads") ) //everytime we open the extension, we need to see what we have saved before,
 // so this object gets the string my leads from localstorage, makes it again an array and assign it to our variable 
@@ -53,5 +54,30 @@ tabBtn.addEventListener("click", function(){
     })
     })
     
+    downloadBtn.addEventListener("click", function(){
+        let newLeads=[]
+        let simpleLead=''
+        for(let i=0;i<myLeads.length;i++){
+            simpleLead=myLeads[i]+'\n'
+            newLeads.push(simpleLead)
+        } //the above is for the code to shown one line after the other
+
+        const blob= new Blob(newLeads,{type:"octet-stream"}) // we create a blob object and we assign it the array that we want
+        // and the type we want the file to be downloaded
+
+        const href= URL.createObjectURL(blob) // creates a URL for our blob
+
+        const a=Object.assign(document.createElement("a"),{  //dom API 
+            href,
+            style:"display:none",
+            download: name="Data.txt"
+        })
+        document.body.appendChild(a); //this appened a tag to the togumend so taht we be able to click on it
+
+        a.click() //it trigers the download of the file
+        URL.revokeObjectURL(href)// this is an API wich revokes the URL we created so that we dont have any memory leaks
+        a.remove() //removes the a tag from the document
+    }
+    )
 
    
