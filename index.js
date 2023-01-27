@@ -10,8 +10,8 @@ const leadsFromLocalStorage = JSON.parse( localStorage.getItem("myLeads") ) //ev
 // so this object gets the string my leads from localstorage, makes it again an array and assign it to our variable 
 
 
-if (leadsFromLocalStorage) { //we check if localstorage is emty, if it is not
-    myLeads = leadsFromLocalStorage   // we assign to myLeads the values that we want to showcase
+if (leadsFromLocalStorage) { // checks if localstorage is emty, if it is not
+    myLeads = leadsFromLocalStorage   // it assigns to myLeads the values that has to showcased
     render(myLeads)
 }
 
@@ -25,9 +25,9 @@ for (let i = 0; i < leads.length; i++) {
             ${leads[i]}
         </a>
     </li>
-` //we add the items in an unordered list of items
+` //it adds the items in an unordered list of items
 }
-ulEl.innerHTML=listItems //we use innerHTML so that we can showcase in index.html an unordered list of items
+ulEl.innerHTML=listItems //uses innerHTML so that we that it showcases at "index.html" an unordered list of items
 }
 
 
@@ -39,16 +39,16 @@ inputBtn.addEventListener("click", function() {  //this is an event listener, wh
     render(myLeads)
 })
 
-deleteBtn.addEventListener("dblclick", function() {  //we listen fopr double clicks
-    localStorage.clear()    //we clean the local storage
-    myLeads = []            //we clean myLeads
+deleteBtn.addEventListener("dblclick", function() {  //listens for double clicks
+    localStorage.clear()    // cleans the local storage
+    myLeads = []            // cleans myLeads
     render(myLeads)
 })
 
 tabBtn.addEventListener("click", function(){  
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){ //we use google API(chrome.tabs.) to query google to: give us the
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){ // this line uses google API(chrome.tabs.) to query google to: give us the
         // link from the active tab that we are using (currentWindow is telling that we need the link from the page that we have our extension open)
-        myLeads.push(tabs[0].url) //this is how google documantation specifies how to take the url from the tab
+        myLeads.push(tabs[0].url) //this is how google documentation specifies how to take the url from the tab
         localStorage.setItem("myLeads", JSON.stringify(myLeads) )
         render(myLeads)
     })
@@ -62,8 +62,8 @@ tabBtn.addEventListener("click", function(){
             newLeads.push(simpleLead)
         } //the above is for the code to shown one line after the other
 
-        const blob= new Blob(newLeads,{type:"octet-stream"}) // we create a blob object and we assign it the array that we want
-        // and the type we want the file to be downloaded
+        const blob= new Blob(newLeads,{type:"octet-stream"}) //  creates a blob object and assigns it the array
+        // and the type of the file that is going be downloaded
 
         const href= URL.createObjectURL(blob) // creates a URL for our blob
 
@@ -72,10 +72,10 @@ tabBtn.addEventListener("click", function(){
             style:"display:none",
             download: name="Data.txt"
         })
-        document.body.appendChild(a); //this appened a tag to the togumend so taht we be able to click on it
+        document.body.appendChild(a); //this appends a tag to the document so that the user be able to click on it
 
         a.click() //it trigers the download of the file
-        URL.revokeObjectURL(href)// this is an API wich revokes the URL we created so that we dont have any memory leaks
+        URL.revokeObjectURL(href)// this is an API wich revokes the URL we created so that the user doesnt have any memory leaks
         a.remove() //removes the a tag from the document
     }
     )
